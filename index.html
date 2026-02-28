@@ -1,0 +1,891 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mathematical Foundations of Modern Machine Learning · PKU 2026</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=JetBrains+Mono:wght@300;400;500&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --ink: #0f0e0b;
+            --paper: #f5f2eb;
+            --paper-dark: #ede9df;
+            --chalk: #faf8f3;
+            --gold: #b8860b;
+            --gold-light: #d4a017;
+            --deep-blue: #1a2744;
+            --slate: #3d4a5c;
+            --muted: #7a7060;
+            --rule: rgba(15,14,11,0.12);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+
+        body {
+            background: var(--paper);
+            color: var(--ink);
+            font-family: 'EB Garamond', Georgia, serif;
+            font-size: 24px;
+            line-height: 1.7;
+            overflow-x: hidden;
+        }
+
+        a { color: var(--gold); text-decoration: none; }
+        a:hover { text-decoration: underline; }
+
+        /* ── NAV ── */
+        nav {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            z-index: 100;
+            background: rgba(245,242,235,0.93);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--rule);
+            padding: 0 48px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .nav-logo {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 15px;
+            letter-spacing: 0.15em;
+            color: var(--muted);
+            text-transform: uppercase;
+            text-decoration: none;
+        }
+
+        .nav-logo:hover { color: var(--ink); text-decoration: none; }
+
+        .nav-links { display: flex; gap: 32px; list-style: none; }
+
+        .nav-links a {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 15px;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--muted);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .nav-links a:hover { color: var(--ink); }
+
+        /* ── HERO ── */
+        #hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            padding: 0 80px 80px;
+            position: relative;
+            overflow: hidden;
+            background: var(--deep-blue);
+        }
+
+        .hero-bg {
+            position: absolute;
+            inset: 0;
+            background: url('asset/pku.png') center center / cover no-repeat;
+            opacity: 0.35;
+        }
+
+        .hero-grid {
+            position: absolute;
+            inset: 0;
+            background-image:
+                linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+            background-size: 60px 60px;
+            animation: gridDrift 30s linear infinite;
+        }
+
+        @keyframes gridDrift {
+            from { transform: translate(0,0); }
+            to { transform: translate(60px,60px); }
+        }
+
+        .hero-overlay {
+            position: absolute;
+            inset: 0;
+            background:
+                radial-gradient(ellipse at 20% 80%, rgba(184,134,11,0.12) 0%, transparent 60%),
+                linear-gradient(180deg, rgba(26,39,68,0.55) 0%, rgba(26,39,68,0.85) 100%);
+        }
+
+        .hero-equations {
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        .eq-float {
+            position: absolute;
+            font-family: 'Cormorant Garamond', serif;
+            font-style: italic;
+            color: rgba(255,255,255,0.07);
+            white-space: nowrap;
+            animation: floatEq 20s ease-in-out infinite;
+        }
+
+        @keyframes floatEq {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-12px); }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 860px;
+        }
+
+        .hero-tag {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 15px;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--gold-light);
+            margin-bottom: 28px;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .hero-tag::before {
+            content: '';
+            display: block;
+            width: 36px;
+            height: 1px;
+            background: var(--gold-light);
+        }
+
+        #hero h1 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(36px, 5vw, 68px);
+            font-weight: 400;
+            line-height: 1.1;
+            color: #f5f2eb;
+            margin-bottom: 36px;
+        }
+
+        #hero h1 em { font-style: italic; color: rgba(245,242,235,0.65); }
+
+        .hero-meta {
+            display: flex;
+            gap: 48px;
+            align-items: flex-start;
+            margin-bottom: 48px;
+        }
+
+        .hero-meta-item { display: flex; flex-direction: column; gap: 4px; }
+
+        .hero-meta-label {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 14px;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: rgba(245,242,235,0.35);
+        }
+
+        .hero-meta-value {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 25px;
+            color: #f5f2eb;
+        }
+
+        .hero-divider {
+            width: 1px;
+            height: 44px;
+            background: rgba(245,242,235,0.18);
+            align-self: center;
+        }
+
+        .hero-register {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 12px;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--ink);
+            background: var(--gold-light);
+            text-decoration: none;
+            padding: 14px 32px;
+            transition: all 0.2s;
+            border: 1px solid transparent;
+        }
+
+        .hero-register:hover {
+            background: transparent;
+            color: var(--gold-light);
+            border-color: var(--gold-light);
+            text-decoration: none;
+        }
+
+        .hero-scroll-hint {
+            position: absolute;
+            bottom: 32px;
+            right: 80px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 10px;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: rgba(245,242,235,0.25);
+            writing-mode: vertical-rl;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .hero-scroll-hint::after {
+            content: '';
+            display: block;
+            width: 1px;
+            height: 40px;
+            background: rgba(245,242,235,0.25);
+            animation: scrollPulse 2s ease-in-out infinite;
+        }
+
+        @keyframes scrollPulse {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 1; }
+        }
+
+        /* ── SHARED ── */
+        section { position: relative; z-index: 1; }
+
+        .section-label {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 14px;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--muted);
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 52px;
+        }
+
+        .section-label::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: var(--rule);
+        }
+
+        /* ── ABOUT ── */
+        #about { padding: 100px 80px; background: var(--paper); }
+
+        .about-layout {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 100px;
+            align-items: start;
+        }
+
+        .about-heading {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 44px;
+            font-weight: 300;
+            line-height: 1.2;
+            margin-bottom: 36px;
+        }
+
+        .about-heading em { font-style: italic; color: var(--muted); }
+
+        .about-body p {
+            font-size: 21px;
+            color: var(--slate);
+            line-height: 1.75;
+            margin-bottom: 20px;
+        }
+
+        .topics-panel {
+            background: var(--deep-blue);
+            padding: 48px;
+            position: sticky;
+            top: 72px;
+        }
+
+        .topics-panel-label {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 14px;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--gold-light);
+            margin-bottom: 32px;
+        }
+
+        .topic-item {
+            display: flex;
+            gap: 20px;
+            align-items: flex-start;
+            padding: 20px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.07);
+        }
+
+        .topic-item:last-child { border-bottom: none; }
+
+        .topic-num {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 15px;
+            color: var(--gold-light);
+            opacity: 0.6;
+            padding-top: 3px;
+            min-width: 24px;
+        }
+
+        .topic-text {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 22px;
+            font-weight: 300;
+            color: rgba(245,242,235,0.9);
+            line-height: 1.4;
+        }
+
+        /* ── SPEAKERS ── */
+        #speakers { padding: 100px 80px; background: var(--paper-dark); }
+
+        .speakers-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 24px;
+        }
+
+        .speaker-card {
+            background: var(--paper);
+            padding: 36px 24px 28px;
+            text-align: center;
+            transition: all 0.25s;
+            position: relative;
+        }
+
+        .speaker-card::after {
+            content: '';
+            position: absolute;
+            bottom: 0; left: 0; right: 0;
+            height: 3px;
+            background: var(--gold-light);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.3s;
+        }
+
+        .speaker-card:hover::after { transform: scaleX(1); }
+        .speaker-card:hover { background: var(--chalk); }
+
+        .speaker-img {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin: 0 auto 18px;
+            display: block;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.12);
+        }
+
+        .speaker-name {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 22px;
+            font-weight: 400;
+            line-height: 1.3;
+            margin-bottom: 5px;
+        }
+
+        .speaker-name a { color: var(--ink); transition: color 0.2s; }
+        .speaker-name a:hover { color: var(--gold); text-decoration: none; }
+
+        .speaker-affil {
+            font-family: 'EB Garamond', serif;
+            font-style: italic;
+            font-size: 18px;
+            color: var(--muted);
+            line-height: 1.4;
+        }
+
+        .speaker-tba {
+            grid-column: span 4;
+            padding: 8px 0 0;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 14px;
+            letter-spacing: 0.12em;
+            color: var(--muted);
+        }
+
+        /* ── PROGRAMME ── */
+        #programme { padding: 100px 80px; background: var(--paper); }
+
+        .programme-days {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+        }
+
+        .day-column { border-top: 2px solid var(--ink); padding-top: 28px; }
+
+        .day-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 32px;
+            font-weight: 300;
+            margin-bottom: 4px;
+        }
+
+        .day-date {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 15px;
+            letter-spacing: 0.1em;
+            color: var(--muted);
+            margin-bottom: 28px;
+        }
+
+        .schedule-row {
+            display: grid;
+            grid-template-columns: 90px 1fr;
+            gap: 16px;
+            padding: 12px 0;
+            border-bottom: 1px solid var(--rule);
+        }
+
+        .schedule-time {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 15px;
+            color: var(--muted);
+        }
+
+        .schedule-event { font-size: 22px; color: var(--slate); font-style: italic; }
+
+        /* ── ORGANIZERS ── */
+        #organizers { padding: 100px 80px; background: var(--deep-blue); }
+
+        #organizers .section-label { color: rgba(245,242,235,0.35); }
+        #organizers .section-label::after { background: rgba(245,242,235,0.1); }
+
+        .organizers-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+        }
+
+        .org-card {
+            background: rgba(255,255,255,0.04);
+            padding: 40px 32px;
+            text-align: center;
+            transition: background 0.25s;
+        }
+
+        .org-card:hover { background: rgba(255,255,255,0.08); }
+
+        .org-img {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin: 0 auto 20px;
+            display: block;
+            box-shadow: 0 2px 16px rgba(0,0,0,0.3);
+        }
+
+        .org-name {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 22px;
+            font-weight: 400;
+            margin-bottom: 5px;
+        }
+
+        .org-name a { color: #f5f2eb; transition: color 0.2s; }
+        .org-name a:hover { color: var(--gold-light); text-decoration: none; }
+
+        .org-affil {
+            font-family: 'EB Garamond', serif;
+            font-style: italic;
+            font-size: 19px;
+            color: rgba(245,242,235,0.45);
+        }
+
+        /* ── LOCATION ── */
+        #location { padding: 100px 80px; background: var(--paper); }
+
+        .location-layout {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 80px;
+            align-items: start;
+        }
+
+        .location-info h3 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 38px;
+            font-weight: 300;
+            margin-bottom: 10px;
+        }
+
+        .location-info h3 a {
+            color: var(--ink);
+            border-bottom: 1px solid var(--gold);
+            transition: color 0.2s;
+        }
+
+        .location-info h3 a:hover { color: var(--gold); text-decoration: none; }
+
+        .location-address {
+            font-size: 17px;
+            color: var(--muted);
+            font-style: italic;
+            line-height: 1.7;
+            margin-bottom: 36px;
+        }
+
+        .location-map {
+            width: 100%;
+            aspect-ratio: 4/3;
+            border: 1px solid var(--rule);
+            display: block;
+        }
+
+        /* ── SPONSORS ── */
+        #sponsors {
+            padding: 56px 80px;
+            background: var(--paper-dark);
+            border-top: 1px solid var(--rule);
+        }
+
+        .sponsors-inner {
+            display: flex;
+            align-items: center;
+            gap: 48px;
+            flex-wrap: wrap;
+        }
+
+        .sponsor-label {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 14px;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--muted);
+            white-space: nowrap;
+        }
+
+        .sponsor-logos { display: flex; align-items: center; gap: 40px; flex-wrap: wrap; }
+
+        .sponsor-logos img {
+            height: 64px;
+            width: auto;
+            object-fit: contain;
+            filter: grayscale(1) opacity(0.55);
+            transition: filter 0.2s;
+        }
+
+        .sponsor-logos img:hover { filter: grayscale(0) opacity(1); }
+
+        /* ── FOOTER ── */
+        footer {
+            background: var(--ink);
+            padding: 36px 80px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .footer-left {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 20px;
+            color: rgba(245,242,235,0.5);
+            font-style: italic;
+        }
+
+        .footer-right {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
+            color: rgba(245,242,235,0.2);
+            letter-spacing: 0.1em;
+        }
+
+        /* ── REVEAL ── */
+        .reveal {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+
+        .reveal.visible { opacity: 1; transform: translateY(0); }
+
+        /* ── RESPONSIVE ── */
+        @media (max-width: 1100px) {
+            .speakers-grid { grid-template-columns: repeat(3, 1fr); }
+            .speaker-tba { grid-column: span 3; }
+        }
+
+        @media (max-width: 900px) {
+            nav, #about, #speakers, #programme, #organizers, #location, #sponsors, footer { padding-left: 32px; padding-right: 32px; }
+            #hero { padding: 0 32px 60px; }
+            .about-layout, .location-layout, .programme-days { grid-template-columns: 1fr; gap: 48px; }
+            .topics-panel { position: static; }
+            .speakers-grid { grid-template-columns: repeat(2, 1fr); }
+            .speaker-tba { grid-column: span 2; }
+            .organizers-grid { grid-template-columns: 1fr 1fr; }
+            .hero-scroll-hint { right: 32px; }
+        }
+
+        @media (max-width: 580px) {
+            nav { padding: 0 20px; }
+            .nav-links { display: none; }
+            #hero { padding: 0 24px 48px; }
+            #about, #speakers, #programme, #organizers, #location, #sponsors, footer { padding-left: 24px; padding-right: 24px; }
+            .speakers-grid { grid-template-columns: repeat(2, 1fr); }
+            .organizers-grid { grid-template-columns: 1fr; }
+            .hero-meta { flex-direction: column; gap: 20px; }
+            .hero-divider { display: none; }
+            footer { flex-direction: column; gap: 12px; text-align: center; }
+        }
+    </style>
+</head>
+<body>
+
+<nav>
+    <a href="#hero" class="nav-logo">ML·Math·2026</a>
+    <ul class="nav-links">
+        <li><a href="#about">About</a></li>
+        <li><a href="#speakers">Speakers</a></li>
+        <li><a href="#programme">Program</a></li>
+        <li><a href="#organizers">Organizers</a></li>
+        <li><a href="#location">Location</a></li>
+    </ul>
+</nav>
+
+<!-- Hero -->
+<section id="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-grid"></div>
+    <div class="hero-overlay"></div>
+    <div class="hero-equations">
+        <span class="eq-float" style="top:18%;left:10%;font-size:13px;animation-delay:-3s">∇²f(x) ≻ 0</span>
+        <span class="eq-float" style="top:34%;left:62%;font-size:11px;animation-delay:-7s">𝔼[X²] − 𝔼[X]² ≥ 0</span>
+        <span class="eq-float" style="top:58%;left:7%;font-size:14px;animation-delay:-12s">Tr(AB) ≤ ‖A‖·‖B‖</span>
+        <span class="eq-float" style="top:70%;left:68%;font-size:12px;animation-delay:-5s">∂L/∂θ ← θ − η∇L</span>
+        <span class="eq-float" style="top:24%;left:40%;font-size:10px;animation-delay:-9s">H(p,q) = −Σ p log q</span>
+        <span class="eq-float" style="top:48%;left:78%;font-size:13px;animation-delay:-15s">Rₙ(𝒻) ≤ 2𝔊ₙ(ℱ) + ε</span>
+        <span class="eq-float" style="top:80%;left:30%;font-size:11px;animation-delay:-6s">Attention(Q,K,V) = softmax(QKᵀ/√d)V</span>
+    </div>
+    <div class="hero-content">
+        <div class="hero-tag">Workshop · Peking University</div>
+        <h1>Mathematical Foundations<br>of <em>Modern</em> Machine Learning</h1>
+        <div class="hero-meta">
+            <div class="hero-meta-item">
+                <span class="hero-meta-label">Dates</span>
+                <span class="hero-meta-value" style="color: var(--gold-light); font-weight: 500;">4–5 July, 2026</span>
+            </div>
+            <div class="hero-divider"></div>
+            <div class="hero-meta-item">
+                <span class="hero-meta-label">Venue</span>
+                <span class="hero-meta-value">Peking University, Beijing</span>
+            </div>
+            <div class="hero-divider"></div>
+            <div class="hero-meta-item">
+                <span class="hero-meta-label">Format</span>
+                <span class="hero-meta-value">Invited Talks & Discussion</span>
+            </div>
+        </div>
+        <a href="#registration" class="hero-register">
+            Register now
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+    </div>
+    <div class="hero-scroll-hint">Scroll</div>
+</section>
+
+<!-- About -->
+<section id="about">
+    <div class="section-label reveal">About the Workshop</div>
+    <div class="about-layout">
+        <div class="about-body reveal">
+            <h2 class="about-heading">Mathematical insight<br>meets <em>modern ML</em> practice</h2>
+            <p>Modern machine learning has developed rapidly in both methodology and scale, while its mathematical foundations remain incomplete. Understanding the structural principles governing expressivity, representation, generalization, optimization, and scaling in large learning systems has become a central problem at the interface of applied mathematics and ML theory.</p>
+            <p>This workshop aims to advance the mathematical foundations of modern machine learning, with particular emphasis on connecting rigorous analysis to phenomena observed in large-scale practice. We bring together researchers working on approximation theory, high-dimensional generalization, optimization dynamics, statistical physics perspectives, and the theory of large language models.</p>
+        </div>
+        <div class="topics-panel reveal">
+            <div class="topics-panel-label">Planned Session Topics</div>
+            <div class="topic-item">
+                <span class="topic-num">01</span>
+                <span class="topic-text">Approximation, generalization, and optimization in deep learning</span>
+            </div>
+            <div class="topic-item">
+                <span class="topic-num">02</span>
+                <span class="topic-text">Statistical physics perspectives on learning and training dynamics</span>
+            </div>
+            <div class="topic-item">
+                <span class="topic-num">03</span>
+                <span class="topic-text">Theoretical foundations of large language models</span>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Speakers -->
+<section id="speakers">
+    <div class="section-label reveal">Invited Speakers</div>
+    <div class="speakers-grid">
+
+        <div class="speaker-card reveal">
+            <img src="asset/belkin.jpg" class="speaker-img" alt="Mikhail Belkin">
+            <div class="speaker-name"><a href="http://misha.belkin-wang.org/" target="_blank">Mikhail Belkin</a></div>
+            <div class="speaker-affil">University of California San Diego</div>
+        </div>
+
+        <div class="speaker-card reveal" style="transition-delay:0.05s">
+            <img src="asset/murat.jpg" class="speaker-img" alt="Murat A. Erdogdu">
+            <div class="speaker-name"><a href="https://www.cs.toronto.edu/~erdogdu/" target="_blank">Murat A. Erdogdu</a></div>
+            <div class="speaker-affil">University of Toronto</div>
+        </div>
+
+        <div class="speaker-card reveal" style="transition-delay:0.1s">
+            <img src="asset/bruno.png" class="speaker-img" alt="Bruno Loureiro">
+            <div class="speaker-name"><a href="https://brloureiro.github.io/" target="_blank">Bruno Loureiro</a></div>
+            <div class="speaker-affil">ENS & CNRS</div>
+        </div>
+
+        <div class="speaker-card reveal" style="transition-delay:0.15s">
+            <img src="asset/patrick.jpg" class="speaker-img" alt="Patrick Rebeschini">
+            <div class="speaker-name"><a href="https://www.stats.ox.ac.uk/~rebeschi/" target="_blank">Patrick Rebeschini</a></div>
+            <div class="speaker-affil">University of Oxford</div>
+        </div>
+
+        <div class="speaker-card reveal" style="transition-delay:0.2s">
+            <img src="asset/mahdi.jpeg" class="speaker-img" alt="Mahdi Soltanolkotabi">
+            <div class="speaker-name"><a href="https://viterbi.usc.edu/directory/faculty/Soltanolkotabi/Mahdi" target="_blank">Mahdi Soltanolkotabi</a></div>
+            <div class="speaker-affil">University of Southern California</div>
+        </div>
+
+        <div class="speaker-card reveal" style="transition-delay:0.25s">
+            <img src="asset/WeijieSu.jpg" class="speaker-img" alt="Weijie Su">
+            <div class="speaker-name"><a href="https://www.weijie-su.com/" target="_blank">Weijie Su</a></div>
+            <div class="speaker-affil">University of Pennsylvania</div>
+        </div>
+
+        <div class="speaker-card reveal" style="transition-delay:0.3s">
+            <img src="asset/suzuki.jpg" class="speaker-img" alt="Taiji Suzuki">
+            <div class="speaker-name"><a href="https://ibis.t.u-tokyo.ac.jp/suzuki/" target="_blank">Taiji Suzuki</a></div>
+            <div class="speaker-affil">University of Tokyo</div>
+        </div>
+
+        <div class="speaker-card reveal" style="transition-delay:0.35s">
+            <img src="asset/denny.jpg" class="speaker-img" alt="Denny Wu">
+            <div class="speaker-name"><a href="https://dennywu1.github.io/" target="_blank">Denny Wu</a></div>
+            <div class="speaker-affil">New York University & Flatiron Institute</div>
+        </div>
+
+        <div class="speaker-tba reveal">More speakers to be announced.</div>
+
+    </div>
+</section>
+
+<!-- Programme -->
+<section id="programme">
+    <div class="section-label reveal">Programme</div>
+    <div class="programme-days">
+        <div class="day-column reveal">
+            <div class="day-title">Saturday</div>
+            <div class="day-date">04 July 2026</div>
+            <div class="schedule-row"><span class="schedule-time">TBD</span><span class="schedule-event">To be announced</span></div>
+            <div class="schedule-row"><span class="schedule-time">TBD</span><span class="schedule-event">To be announced</span></div>
+            <div class="schedule-row"><span class="schedule-time">TBD</span><span class="schedule-event">To be announced</span></div>
+        </div>
+        <div class="day-column reveal" style="transition-delay:0.1s">
+            <div class="day-title">Sunday</div>
+            <div class="day-date">05 July 2026</div>
+            <div class="schedule-row"><span class="schedule-time">TBD</span><span class="schedule-event">To be announced</span></div>
+            <div class="schedule-row"><span class="schedule-time">TBD</span><span class="schedule-event">To be announced</span></div>
+            <div class="schedule-row"><span class="schedule-time">TBD</span><span class="schedule-event">To be announced</span></div>
+        </div>
+    </div>
+</section>
+
+<!-- Organizers -->
+<section id="organizers">
+    <div class="section-label reveal">Organizing Committee</div>
+    <div class="organizers-grid">
+
+        <div class="org-card reveal">
+            <img src="asset/liufanghui.jpg" class="org-img" alt="Fanghui Liu">
+            <div class="org-name"><a href="https://www.lfhsgre.org/" target="_blank">Fanghui Liu</a></div>
+            <div class="org-affil">University of Warwick</div>
+        </div>
+
+        <div class="org-card reveal" style="transition-delay:0.08s">
+            <img src="asset/wulei.png" class="org-img" alt="Lei Wu">
+            <div class="org-name"><a href="https://leiwu0.github.io/" target="_blank">Lei Wu</a></div>
+            <div class="org-affil">Peking University</div>
+        </div>
+
+        <div class="org-card reveal" style="transition-delay:0.16s">
+            <img src="asset/yuankun.jpg" class="org-img" alt="Kun Yuan">
+            <div class="org-name"><a href="https://kunyuan827.github.io/" target="_blank">Kun Yuan</a></div>
+            <div class="org-affil">Peking University</div>
+        </div>
+
+    </div>
+</section>
+
+<!-- Location -->
+<section id="location">
+    <div class="section-label reveal">Venue</div>
+    <div class="location-layout">
+        <div class="location-info reveal">
+            <h3><a href="https://english.pku.edu.cn/" target="_blank">Peking University</a></h3>
+            <p class="location-address">
+                No. 5 Yiheyuan Road<br>
+                Haidian District<br>
+                Beijing, 100871, P.R. China
+            </p>
+            <p style="font-size:17px;color:var(--slate);line-height:1.7;">One of China's foremost research universities, founded in 1898. The workshop will be hosted at the School of Mathematical Sciences.</p>
+        </div>
+        <div class="reveal" style="transition-delay:0.1s">
+            <iframe class="location-map"
+                src="https://maps.google.com/maps?q=Peking+University,+Beijing&output=embed"
+                allowfullscreen loading="lazy" title="Peking University Map"></iframe>
+        </div>
+    </div>
+</section>
+
+<!-- Sponsors -->
+<section id="sponsors">
+    <div class="sponsors-inner reveal">
+        <span class="sponsor-label">Supported by</span>
+        <div class="sponsor-logos">
+            <img src="asset/CMLR-PKU.png" alt="CMLR Peking University">
+            <img src="asset/math-PKU.jpg" alt="School of Mathematical Sciences PKU">
+            <img src="asset/INS-SJTU.png" alt="INS SJTU">
+        </div>
+    </div>
+</section>
+
+<!-- Footer -->
+<footer>
+    <div class="footer-left">Mathematical Foundations of Modern Machine Learning</div>
+    <div class="footer-right">PKU · Beijing · July 2026</div>
+</footer>
+
+<script>
+    const reveals = document.querySelectorAll('.reveal');
+    const io = new IntersectionObserver((entries) => {
+        entries.forEach(e => {
+            if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); }
+        });
+    }, { threshold: 0.08, rootMargin: '0px 0px -30px 0px' });
+    reveals.forEach(el => io.observe(el));
+
+    const sections = document.querySelectorAll('section[id]');
+    const navLinks = document.querySelectorAll('.nav-links a');
+    window.addEventListener('scroll', () => {
+        let current = '';
+        sections.forEach(s => { if (window.scrollY >= s.offsetTop - 80) current = s.id; });
+        navLinks.forEach(a => { a.style.color = a.getAttribute('href') === '#' + current ? 'var(--ink)' : ''; });
+    });
+</script>
+</body>
+</html>
