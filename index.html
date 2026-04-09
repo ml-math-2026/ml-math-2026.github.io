@@ -550,16 +550,17 @@
 
         /* ── SPONSORS ── */
         #sponsors {
-            padding: 56px 80px;
+            padding: 60px 80px;
             background: #3d4a5c; 
             border-top: 1px solid rgba(255,255,255,0.1);
         }
 
         .sponsors-inner {
             display: flex;
-            align-items: center;
-            gap: 48px;
-            flex-wrap: nowrap; 
+
+            flex-direction: column; 
+            align-items: flex-start;
+            gap: 32px;
         }
 
         .sponsor-label {
@@ -567,21 +568,24 @@
             font-size: 14px;
             letter-spacing: 0.2em;
             text-transform: uppercase;
-            color: rgba(245,242,235,0.5); 
+            color: rgba(245,242,235,0.45);
             white-space: nowrap;
         }
 
         .sponsor-logos { 
             display: flex; 
             align-items: center; 
-            gap: 40px; 
-            flex-wrap: nowrap; 
+            gap: 60px; 
+            flex-wrap: wrap; 
+            width: 100%;
         }
 
         .sponsor-logos img {
-            height: 60px;
+            height: 52px; 
             width: auto;
             object-fit: contain;
+            filter: none;
+            opacity: 1;
         }
         
         /* ── FOOTER ── */
