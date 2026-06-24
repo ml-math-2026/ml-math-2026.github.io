@@ -445,8 +445,16 @@
             display: grid;
             grid-template-columns: 118px 1fr;
             gap: 22px;
-            padding: 17px 0;
+            padding: 16px 12px;
             border-bottom: 1px solid var(--rule);
+        }
+
+        .schedule-break {
+            margin: 0;
+            padding: 13px 12px;
+            background: rgba(237, 233, 223, 0.72);
+            border-bottom: 1px solid var(--rule);
+            box-shadow: none;
         }
 
         .schedule-time {
@@ -458,27 +466,34 @@
         }
 
         .schedule-event {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-            font-size: 17px;
-            line-height: 1.45;
-            color: var(--slate);
+            font-family: 'EB Garamond', Georgia, serif;
+            font-size: 18px;
+            line-height: 1.38;
+            color: #3f4855;
             font-style: normal;
         }
 
         .session-speaker {
             display: block;
-            font-weight: 550;
-            color: #2f3744;
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 20px;
+            font-weight: 400;
+            line-height: 1.25;
+            color: var(--ink);
         }
 
         .session-title {
             display: block;
-            margin-top: 3px;
-            color: #333a45;
+            margin-top: 5px;
+            color: #65707c;
+            font-size: 16px;
+            line-height: 1.45;
         }
 
         .schedule-break .schedule-event {
-            color: #5c5860;
+            color: #6d746f;
+            font-size: 18px;
+            font-style: normal;
             font-weight: 400;
         }
 
@@ -865,9 +880,9 @@
         <div class="day-column reveal">
             <div class="day-title">Friday</div>
             <div class="day-date">July 3, 2026</div>
-            <div class="schedule-row schedule-break"><span class="schedule-time">09:00–09:10</span><span class="schedule-event">Opening Remarks</span></div>
+            <div class="schedule-row"><span class="schedule-time">09:00–09:10</span><span class="schedule-event">Opening Remarks</span></div>
             <div class="schedule-row"><span class="schedule-time">09:10–10:00</span><span class="schedule-event"><strong class="session-speaker">Mikhail Belkin</strong><span class="session-title">Title TBA</span></span></div>
-            <div class="schedule-row schedule-break"><span class="schedule-time">10:00–10:30</span><span class="schedule-event">Group Photo &amp; Tea Break</span></div>
+            <div class="schedule-row schedule-break"><span class="schedule-time">10:00–10:30</span><span class="schedule-event">Group Photo & Tea Break</span></div>
             <div class="schedule-row"><span class="schedule-time">10:30–11:20</span><span class="schedule-event"><strong class="session-speaker">Lenka Zdeborová</strong><span class="session-title">The Rules-and-Facts Model for Simultaneous Generalization and Memorization in Neural Networks</span></span></div>
             <div class="schedule-row"><span class="schedule-time">11:20–12:10</span><span class="schedule-event"><strong class="session-speaker">Gitta Kutyniok</strong><span class="session-title">Towards a Theory of Computability for Modern Artificial Intelligence</span></span></div>
             <div class="schedule-row schedule-break"><span class="schedule-time">12:10–14:00</span><span class="schedule-event">Lunch</span></div>
@@ -876,7 +891,7 @@
             <div class="schedule-row schedule-break"><span class="schedule-time">15:40–16:10</span><span class="schedule-event">Tea Break</span></div>
             <div class="schedule-row"><span class="schedule-time">16:10–17:00</span><span class="schedule-event"><strong class="session-speaker">Patrick Rebeschini</strong><span class="session-title">Generalisation Error and Effective Dimensions: From Neural Networks to Diffusion Models</span></span></div>
             <div class="schedule-row"><span class="schedule-time">17:00–17:50</span><span class="schedule-event"><strong class="session-speaker">Fanghui Liu</strong><span class="session-title">From SLT4AI to AI4SLT: Generalization under Scaling and Infrastructure in Lean 4</span></span></div>
-            <div class="schedule-row schedule-break"><span class="schedule-time">18:00–20:00</span><span class="schedule-event">Welcome Dinner</span></div>
+            <div class="schedule-row"><span class="schedule-time">18:00–20:00</span><span class="schedule-event">Welcome Dinner</span></div>
         </div>
         
         <div class="day-column reveal">
@@ -900,7 +915,7 @@
             <div class="schedule-row"><span class="schedule-time">09:50–10:40</span><span class="schedule-event"><strong class="session-speaker">Taiji Suzuki</strong><span class="session-title">Robust Generalization Ability and Feature Learning Dynamics for Deep Foundation Models: Mean Field Langevin and Associative Recall</span></span></div>
             <div class="schedule-row schedule-break"><span class="schedule-time">10:40–11:10</span><span class="schedule-event">Tea Break</span></div>
             <div class="schedule-row"><span class="schedule-time">11:10–12:00</span><span class="schedule-event"><strong class="session-speaker">Denny Wu</strong><span class="session-title">Sharp Capacity Scaling of Spectral Optimizers in Learning Associative Memory</span></span></div>
-            <div class="schedule-row schedule-break"><span class="schedule-time">12:00–12:10</span><span class="schedule-event">Closing Remarks</span></div>
+            <div class="schedule-row"><span class="schedule-time">12:00–12:10</span><span class="schedule-event">Closing Remarks</span></div>
         </div>
     </div>
 </section>
