@@ -205,27 +205,11 @@
             align-self: center;
         }
 
-        .hero-register {
-            display: inline-flex;
-            align-items: center;
-            gap: 12px;
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 12px;
-            letter-spacing: 0.12em;
-            text-transform: uppercase;
-            color: var(--ink);
-            background: var(--gold-light);
-            text-decoration: none;
-            padding: 14px 32px;
-            transition: all 0.2s;
-            border: 1px solid transparent;
-        }
-
-        .hero-register:hover {
-            background: transparent;
-            color: var(--gold-light);
-            border-color: var(--gold-light);
-            text-decoration: none;
+        .registration-note {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            font-size: 16px;
+            line-height: 1.5;
+            color: rgba(245,242,235,0.68);
         }
 
         .hero-scroll-hint {
@@ -418,16 +402,29 @@
             color: var(--muted);
         }
 
-        /* ── PROGRAMME ── */
-        #programme { padding: 100px 80px; background: var(--paper); }
+        /* ── SCHEDULE ── */
+        #schedule { padding: 100px 80px; background: var(--paper); }
 
-        .programme-days {
+        .schedule-note {
+            max-width: 720px;
+            margin: -24px 0 48px;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            font-size: 17px;
+            line-height: 1.6;
+            letter-spacing: 0;
+            color: var(--muted);
+        }
+
+        .schedule-days {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 60px;
         }
 
-        .day-column { border-top: 2px solid var(--ink); padding-top: 28px; }
+        .day-column {
+            border-top: 2px solid var(--ink);
+            padding-top: 28px;
+        }
 
         .day-title {
             font-family: 'Cormorant Garamond', serif;
@@ -446,19 +443,44 @@
 
         .schedule-row {
             display: grid;
-            grid-template-columns: 90px 1fr;
-            gap: 16px;
-            padding: 12px 0;
+            grid-template-columns: 118px 1fr;
+            gap: 22px;
+            padding: 17px 0;
             border-bottom: 1px solid var(--rule);
         }
 
         .schedule-time {
             font-family: 'JetBrains Mono', monospace;
-            font-size: 15px;
+            font-size: 13px;
+            line-height: 1.6;
             color: var(--muted);
+            font-variant-numeric: tabular-nums;
         }
 
-        .schedule-event { font-size: 22px; color: var(--slate); font-style: italic; }
+        .schedule-event {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            font-size: 17px;
+            line-height: 1.45;
+            color: var(--slate);
+            font-style: normal;
+        }
+
+        .session-speaker {
+            display: block;
+            font-weight: 650;
+            color: var(--deep-blue);
+        }
+
+        .session-title {
+            display: block;
+            margin-top: 3px;
+            color: #333a45;
+        }
+
+        .schedule-break .schedule-event {
+            color: #5c5860;
+            font-weight: 500;
+        }
 
         /* ── ORGANIZERS ── */
         #organizers { padding: 100px 80px; background: var(--deep-blue); }
@@ -628,9 +650,9 @@
         }
 
         @media (max-width: 900px) {
-            nav, #about, #speakers, #programme, #organizers, #location, #sponsors, footer { padding-left: 32px; padding-right: 32px; }
+            nav, #about, #speakers, #schedule, #organizers, #location, #sponsors, footer { padding-left: 32px; padding-right: 32px; }
             #hero { padding: 0 32px 60px; }
-            .about-layout, .location-layout, .programme-days { grid-template-columns: 1fr; gap: 48px; }
+            .about-layout, .location-layout, .schedule-days { grid-template-columns: 1fr; gap: 48px; }
             .topics-panel { position: static; }
             .speakers-grid { grid-template-columns: repeat(2, 1fr); }
             .speaker-tba { grid-column: span 2; }
@@ -642,7 +664,7 @@
             nav { padding: 0 20px; }
             .nav-links { display: none; }
             #hero { padding: 0 24px 48px; }
-            #about, #speakers, #programme, #organizers, #location, #sponsors, footer { padding-left: 24px; padding-right: 24px; }
+            #about, #speakers, #schedule, #organizers, #location, #sponsors, footer { padding-left: 24px; padding-right: 24px; }
             .speakers-grid { grid-template-columns: repeat(2, 1fr); }
             .organizers-grid { grid-template-columns: 1fr; }
             .hero-meta { flex-direction: column; gap: 20px; }
@@ -658,7 +680,7 @@
     <ul class="nav-links">
         <li><a href="#about">About</a></li>
         <li><a href="#speakers">Speakers</a></li>
-        <li><a href="#programme">Program</a></li>
+        <li><a href="#schedule">Schedule</a></li>
         <li><a href="#organizers">Organizers</a></li>
         <li><a href="#location">Location</a></li>
     </ul>
@@ -697,10 +719,7 @@
                 <span class="hero-meta-value">Invited Talks & Discussion</span>
             </div>
         </div>
-        <a href="https://v.wjx.cn/vm/Y0qd5QE.aspx#" class="hero-register">
-            Registrate Now
-            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </a>
+        <p class="registration-note">Registration has closed.</p>
     </div>
     <div class="hero-scroll-hint">Scroll</div>
 </section>
@@ -838,50 +857,50 @@
     </div>
 </section>
 
-<!-- Programme -->
-<section id="programme">
-    <div class="section-label reveal">Programme</div>
-    <div class="day-date reveal" style="margin-top: -36px;">This programme is tentative and subject to change.</div>
-    <div class="programme-days">
+<!-- Schedule -->
+<section id="schedule">
+    <div class="section-label reveal">Schedule</div>
+    <p class="schedule-note reveal">All times are in Beijing Time. The schedule is preliminary and may be updated.</p>
+    <div class="schedule-days">
         <div class="day-column reveal">
             <div class="day-title">Friday</div>
-            <div class="day-date">03 July 2026</div>
-            <div class="schedule-row"><span class="schedule-time">09:00 - 09:10</span><span class="schedule-event">Opening Ceremony</span></div>
-            <div class="schedule-row"><span class="schedule-time">09:10 - 10:00</span><span class="schedule-event">Speaker: Mikhail Belkin<br>Talk: To Be Announced</span></div>
-            <div class="schedule-row"><span class="schedule-time">10:00 - 10:30</span><span class="schedule-event">Group Photo and Tea Break</span></div>
-            <div class="schedule-row"><span class="schedule-time">10:30 - 11:20</span><span class="schedule-event">Speaker: Lenka Zdeborová<br>Talk: The Rules-and-Facts Model for Simultaneous Generalization and Memorization in Neural Networks</span></div>
-            <div class="schedule-row"><span class="schedule-time">11:20 - 12:10</span><span class="schedule-event">Speaker: Gitta Kutyniok<br>Talk: Towards a Theory of Computability for Modern Artificial Intelligence</span></div>
-            <div class="schedule-row"><span class="schedule-time">12:10 - 14:00</span><span class="schedule-event">Lunch</span></div>
-            <div class="schedule-row"><span class="schedule-time">14:00 - 14:50</span><span class="schedule-event">Speaker: Florent Krzakala<br>Talk: A Theory of Deep Learning as Neural Low-Degree Filtering</span></div>
-            <div class="schedule-row"><span class="schedule-time">14:50 - 15:40</span><span class="schedule-event">Speaker: Lei Wu<br>Talk: Functional Scaling Laws for LLM Pretraining</span></div>
-            <div class="schedule-row"><span class="schedule-time">15:40 - 16:10</span><span class="schedule-event">Tea Break</span></div>
-            <div class="schedule-row"><span class="schedule-time">16:10 - 17:00</span><span class="schedule-event">Speaker: Patrick Rebeschini<br>Talk: Generalisation Error and Effective Dimensions: From Neural Networks to Diffusion Models.</span></div>
-            <div class="schedule-row"><span class="schedule-time">17:00 - 17:50</span><span class="schedule-event">Speaker: Fanghui Liu<br>Talk: From SLT4AI to AI4SLT: Generalization under Scaling and Infrastructure in Lean 4</span></div>
-            <div class="schedule-row"><span class="schedule-time">18:00 - 20:00</span><span class="schedule-event">Welcome Dinner</span></div>
+            <div class="day-date">July 3, 2026</div>
+            <div class="schedule-row schedule-break"><span class="schedule-time">09:00–09:10</span><span class="schedule-event">Opening Remarks</span></div>
+            <div class="schedule-row"><span class="schedule-time">09:10–10:00</span><span class="schedule-event"><strong class="session-speaker">Mikhail Belkin</strong><span class="session-title">Title TBA</span></span></div>
+            <div class="schedule-row schedule-break"><span class="schedule-time">10:00–10:30</span><span class="schedule-event">Group Photo &amp; Tea Break</span></div>
+            <div class="schedule-row"><span class="schedule-time">10:30–11:20</span><span class="schedule-event"><strong class="session-speaker">Lenka Zdeborová</strong><span class="session-title">The Rules-and-Facts Model for Simultaneous Generalization and Memorization in Neural Networks</span></span></div>
+            <div class="schedule-row"><span class="schedule-time">11:20–12:10</span><span class="schedule-event"><strong class="session-speaker">Gitta Kutyniok</strong><span class="session-title">Towards a Theory of Computability for Modern Artificial Intelligence</span></span></div>
+            <div class="schedule-row schedule-break"><span class="schedule-time">12:10–14:00</span><span class="schedule-event">Lunch</span></div>
+            <div class="schedule-row"><span class="schedule-time">14:00–14:50</span><span class="schedule-event"><strong class="session-speaker">Florent Krzakala</strong><span class="session-title">A Theory of Deep Learning as Neural Low-Degree Filtering</span></span></div>
+            <div class="schedule-row"><span class="schedule-time">14:50–15:40</span><span class="schedule-event"><strong class="session-speaker">Lei Wu</strong><span class="session-title">Functional Scaling Laws for LLM Pretraining</span></span></div>
+            <div class="schedule-row schedule-break"><span class="schedule-time">15:40–16:10</span><span class="schedule-event">Tea Break</span></div>
+            <div class="schedule-row"><span class="schedule-time">16:10–17:00</span><span class="schedule-event"><strong class="session-speaker">Patrick Rebeschini</strong><span class="session-title">Generalisation Error and Effective Dimensions: From Neural Networks to Diffusion Models</span></span></div>
+            <div class="schedule-row"><span class="schedule-time">17:00–17:50</span><span class="schedule-event"><strong class="session-speaker">Fanghui Liu</strong><span class="session-title">From SLT4AI to AI4SLT: Generalization under Scaling and Infrastructure in Lean 4</span></span></div>
+            <div class="schedule-row schedule-break"><span class="schedule-time">18:00–20:00</span><span class="schedule-event">Welcome Dinner</span></div>
         </div>
         
         <div class="day-column reveal">
             <div class="day-title">Saturday</div>
-            <div class="day-date">04 July 2026</div>
-            <div class="schedule-row"><span class="schedule-time">09:00 - 09:50</span><span class="schedule-event">Speaker: Jinchao Xu<br>Talk: Neural Networks and Classical Numerical Methods: A Theoretical Perspective</span></div>
-            <div class="schedule-row"><span class="schedule-time">09:50 - 10:40</span><span class="schedule-event">Speaker: Volkan Cevher<br>Talk: Optimistic Dual Averaging Unifies Modern Optimizers</span></div>
-            <div class="schedule-row"><span class="schedule-time">10:40 - 11:10</span><span class="schedule-event">Tea Break</span></div>
-            <div class="schedule-row"><span class="schedule-time">11:10 - 12:00</span><span class="schedule-event">Speaker: Murat A. Erdogdu<br>Talk: Learning Neural Networks in High-Dimensions: Scaling Laws from Regression to Classification</span></div>
-            <div class="schedule-row"><span class="schedule-time">12:00 - 14:00</span><span class="schedule-event">Lunch</span></div>
-            <div class="schedule-row"><span class="schedule-time">14:00 - 14:50</span><span class="schedule-event">Speaker: Weijie Su<br>Talk: Surrogate-Model Approaches to Optimizers for LLM Training</span></div>
-            <div class="schedule-row"><span class="schedule-time">14:50 - 15:40</span><span class="schedule-event">Speaker: Bruno Loureiro<br>Talk: Scaling Laws and Spectra of Shallow Neural Networks in the Feature-Learning Regime</span></div>
-            <div class="schedule-row"><span class="schedule-time">15:40 - 16:10</span><span class="schedule-event">Tea Break</span></div>
-            <div class="schedule-row"><span class="schedule-time">16:10 - 17:00</span><span class="schedule-event">Speaker: Kun Yuan<br>Talk: A Memory Efficient Randomized Subspace Optimization Method for Training Large Language Models</span></div>
+            <div class="day-date">July 4, 2026</div>
+            <div class="schedule-row"><span class="schedule-time">09:00–09:50</span><span class="schedule-event"><strong class="session-speaker">Jinchao Xu</strong><span class="session-title">Neural Networks and Classical Numerical Methods: A Theoretical Perspective</span></span></div>
+            <div class="schedule-row"><span class="schedule-time">09:50–10:40</span><span class="schedule-event"><strong class="session-speaker">Volkan Cevher</strong><span class="session-title">Optimistic Dual Averaging Unifies Modern Optimizers</span></span></div>
+            <div class="schedule-row schedule-break"><span class="schedule-time">10:40–11:10</span><span class="schedule-event">Tea Break</span></div>
+            <div class="schedule-row"><span class="schedule-time">11:10–12:00</span><span class="schedule-event"><strong class="session-speaker">Murat A. Erdogdu</strong><span class="session-title">Learning Neural Networks in High-Dimensions: Scaling Laws from Regression to Classification</span></span></div>
+            <div class="schedule-row schedule-break"><span class="schedule-time">12:00–14:00</span><span class="schedule-event">Lunch</span></div>
+            <div class="schedule-row"><span class="schedule-time">14:00–14:50</span><span class="schedule-event"><strong class="session-speaker">Weijie Su</strong><span class="session-title">Surrogate-Model Approaches to Optimizers for LLM Training</span></span></div>
+            <div class="schedule-row"><span class="schedule-time">14:50–15:40</span><span class="schedule-event"><strong class="session-speaker">Bruno Loureiro</strong><span class="session-title">Scaling Laws and Spectra of Shallow Neural Networks in the Feature-Learning Regime</span></span></div>
+            <div class="schedule-row schedule-break"><span class="schedule-time">15:40–16:10</span><span class="schedule-event">Tea Break</span></div>
+            <div class="schedule-row"><span class="schedule-time">16:10–17:00</span><span class="schedule-event"><strong class="session-speaker">Kun Yuan</strong><span class="session-title">A Memory Efficient Randomized Subspace Optimization Method for Training Large Language Models</span></span></div>
         </div>
         
         <div class="day-column reveal" style="transition-delay:0.1s">
             <div class="day-title">Sunday</div>
-            <div class="day-date">05 July 2026</div>
-            <div class="schedule-row"><span class="schedule-time">09:00 - 09:50</span><span class="schedule-event">Speaker: Mahdi Soltanolkotabi<br>Talk: Steering Generative Models with Verifiable Feedback</span></div>
-            <div class="schedule-row"><span class="schedule-time">09:50 - 10:40</span><span class="schedule-event">Speaker: Taiji Suzuki<br>Talk: Robust Generalization Ability and Feature Learning Dynamics for Deep Foundation Models: Mean Field Langevin and Associative Recall</span></div>
-            <div class="schedule-row"><span class="schedule-time">10:40 - 11:10</span><span class="schedule-event">Tea Break</span></div>
-            <div class="schedule-row"><span class="schedule-time">11:10 - 12:00</span><span class="schedule-event">Speaker: Denny Wu<br>Talk: Sharp Capacity Scaling of Spectral Optimizers in Learning Associative Memory</span></div>
-            <div class="schedule-row"><span class="schedule-time">12:00 - 12:10</span><span class="schedule-event">Closing Remarks</span></div>
+            <div class="day-date">July 5, 2026</div>
+            <div class="schedule-row"><span class="schedule-time">09:00–09:50</span><span class="schedule-event"><strong class="session-speaker">Mahdi Soltanolkotabi</strong><span class="session-title">Steering Generative Models with Verifiable Feedback</span></span></div>
+            <div class="schedule-row"><span class="schedule-time">09:50–10:40</span><span class="schedule-event"><strong class="session-speaker">Taiji Suzuki</strong><span class="session-title">Robust Generalization Ability and Feature Learning Dynamics for Deep Foundation Models: Mean Field Langevin and Associative Recall</span></span></div>
+            <div class="schedule-row schedule-break"><span class="schedule-time">10:40–11:10</span><span class="schedule-event">Tea Break</span></div>
+            <div class="schedule-row"><span class="schedule-time">11:10–12:00</span><span class="schedule-event"><strong class="session-speaker">Denny Wu</strong><span class="session-title">Sharp Capacity Scaling of Spectral Optimizers in Learning Associative Memory</span></span></div>
+            <div class="schedule-row schedule-break"><span class="schedule-time">12:00–12:10</span><span class="schedule-event">Closing Remarks</span></div>
         </div>
     </div>
 </section>
