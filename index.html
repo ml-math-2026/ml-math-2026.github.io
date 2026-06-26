@@ -212,6 +212,26 @@
             color: rgba(245,242,235,0.68);
         }
 
+        .handbook-download {
+            display: inline-flex;
+            align-items: center;
+            margin-top: 14px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 12px;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: var(--gold-light);
+            text-decoration: none;
+            border-bottom: 1px solid rgba(218,165,32,0.45);
+            padding-bottom: 4px;
+            transition: color 0.2s, border-color 0.2s;
+        }
+
+        .handbook-download:hover {
+            color: #f8d878;
+            border-color: rgba(248,216,120,0.75);
+        }
+
         .hero-scroll-hint {
             position: absolute;
             bottom: 32px;
@@ -870,6 +890,7 @@
             </div>
         </div>
         <p class="registration-note">Registration has closed.</p>
+        <a class="handbook-download" href="asset/MATH-ML-2026%20.pdf" download>Download conference handbook</a>
     </div>
     <div class="hero-scroll-hint">Scroll</div>
 </section>
